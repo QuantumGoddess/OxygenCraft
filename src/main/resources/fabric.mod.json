@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "oxygencraft",
+  "version": "${version}",
+
+  "name": "Oxygen Craft",
+  "description": "A space exploration mod for minecraft",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/QuantumGoddess/OxygenCraft"
+  },
+
+  "license": "GPL-3.0",
+  "icon": "assets/oxygencraft/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.quantumgoddess.oxygencraft.OCMain"
+    ]
+  },
+  "mixins": [
+    "oxygencraft.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
