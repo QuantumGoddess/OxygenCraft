@@ -30,13 +30,14 @@ public class LivingEntityMixin {
         if (entity.isAlive()) {
             boolean bl = entity instanceof PlayerEntity;
             //check if player is in air
-            if (entity.world.getBlockState(new BlockPos(entity.getX(), entity.getEyeY(), entity.getZ())).isOf(Blocks.AIR)) {
+            if (entity.world.getBlockState(new BlockPos(entity.getX(), entity.getEyeY(), entity.getZ())).isAir()) {
                 //check if entity is a player or is invulnerable
                 boolean bl2 = (!bl || !((PlayerEntity)entity).getAbilities().invulnerable);
                 if (bl2) {
                     entity.setAir(getNextAir(entity, entity.getAir()));
                     if (entity.getAir() == -20) {
-                        entity.setAir(0);
+                        //every tick out of water you gain 4 ticks, so this netts 0 air at end of tick
+                        entity.setAir(-4);
                         //TODO: set damage source?
                         entity.damage(DamageSource.DROWN, 2.0f);
                     }
