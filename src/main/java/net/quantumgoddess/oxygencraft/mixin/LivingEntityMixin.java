@@ -6,7 +6,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -23,8 +22,9 @@ public class LivingEntityMixin {
         Random getRandom();
     }
 
-    @Inject(at = @At("HEAD"), method = "baseTick()V")
-    public void baseTick(CallbackInfo info){
+    @Inject(method = "baseTick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;push(Ljava/lang/String;)V", shift = At.Shift.AFTER))
+    //@Inject(at = @At("HEAD"), method = "baseTick()V")
+    public void handleOxygen(CallbackInfo info){
         LivingEntity entity = ((LivingEntity)(Object)this);
         //copied drowning code and changed to work in air
         if (entity.isAlive()) {
