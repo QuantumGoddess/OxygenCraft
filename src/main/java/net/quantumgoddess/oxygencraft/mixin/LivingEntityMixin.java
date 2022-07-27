@@ -8,10 +8,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
+import net.quantumgoddess.oxygencraft.damage.OCDamageSource;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
@@ -38,8 +38,7 @@ public class LivingEntityMixin {
                     if (entity.getAir() == -20) {
                         //every tick out of water you gain 4 ticks, so this netts 0 air at end of tick
                         entity.setAir(-4);
-                        //TODO: set damage source?
-                        entity.damage(DamageSource.DROWN, 2.0f);
+                        entity.damage(OCDamageSource.CHOKE, 2.0f);
                     }
                 }
             }
