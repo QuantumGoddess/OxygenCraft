@@ -5,13 +5,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
+import net.quantumgoddess.oxygencraft.blocks.OCBlocks;
+import net.quantumgoddess.oxygencraft.items.OCItems;
 import net.quantumgoddess.oxygencraft.planets.Planet;
 import net.quantumgoddess.oxygencraft.planets.PlanetManager;
 
@@ -22,11 +29,21 @@ public class OCMain implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("oxygencraft");
 	private static KeyBinding keyBinding;
 
+	public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(
+        new Identifier("oxygencraft", "general"),
+        () -> new ItemStack(Blocks.COBBLESTONE));
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+
+		//register all items
+		OCItems.register();
+		//register all blocks
+		OCBlocks.register();
+
 		
 		keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.examplemod.spook", // The translation key of the keybinding's name
