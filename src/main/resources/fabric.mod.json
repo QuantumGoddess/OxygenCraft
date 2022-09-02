@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "net.quantumgoddess.oxygencraft.OCMain"
+    ],
+    "client": [
+      "net.quantumgoddess.oxygencraft.OCClient"
     ]
   },
   "mixins": [

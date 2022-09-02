@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.quantumgoddess.oxygencraft.damage.OCDamageSource;
+import net.quantumgoddess.oxygencraft.planets.PlanetManager;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
@@ -30,7 +31,7 @@ public class LivingEntityMixin {
         if (entity.isAlive()) {
             boolean bl = entity instanceof PlayerEntity;
             //check if player is in air
-            if (entity.world.getBlockState(new BlockPos(entity.getX(), entity.getEyeY(), entity.getZ())).isAir()) {
+            if (entity.world.getBlockState(new BlockPos(entity.getX(), entity.getEyeY(), entity.getZ())).isAir() && !PlanetManager.planets.get(entity.world.getRegistryKey()).hasOxygen()) {
                 //check if entity is a player or is invulnerable
                 boolean bl2 = (!bl || !((PlayerEntity)entity).getAbilities().invulnerable);
                 if (bl2) {
