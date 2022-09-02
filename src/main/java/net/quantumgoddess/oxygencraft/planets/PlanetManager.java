@@ -1,25 +1,26 @@
 package net.quantumgoddess.oxygencraft.planets;
 
-import java.util.HashMap;
+import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 
+
 public class PlanetManager {
 
-    public static final HashMap<Identifier, RegistryKey<World>> planets = new HashMap<>();
+    public static final Map<RegistryKey<World>, Planet> planets = Maps.newLinkedHashMap();
 
 
-    public static void teleport(World world, Entity entity, Identifier planetID) {
+    public static void teleport(Entity entity, ServerWorld destination) {
         // if (link == null) return;
         // if (link.getBeforeTPEvent().execute(entity) == SHOULDTP.CANCEL_TP)
         //     return;
-        RegistryKey<World> destKey = PlanetManager.planets.get(planetID);
-        ServerWorld destination = ((ServerWorld) world).getServer().getWorld(destKey);
+        if (entity == null) return;
         if (destination == null) return;
         if(!entity.canUsePortals())return;
 
@@ -35,4 +36,6 @@ public class PlanetManager {
         //     link.executePostTPEvent(entity);
         // }
     }
+
+    
 }

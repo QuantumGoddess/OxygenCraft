@@ -10,9 +10,9 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
+import net.quantumgoddess.oxygencraft.planets.Planet;
 import net.quantumgoddess.oxygencraft.planets.PlanetManager;
 
 public class OCMain implements ModInitializer {
@@ -38,7 +38,7 @@ public class OCMain implements ModInitializer {
         ServerTickEvents.END_WORLD_TICK.register(world -> {
             while (keyBinding.wasPressed()) {
             //server. .sendMessage(Text.literal("Key 1 was pressed!"), false);
-                PlanetManager.teleport(world, world.getPlayerByUuid(OCClient.MCClient.player.getUuid()), new Identifier("oxygencraft:test"));
+                PlanetManager.teleport(world.getPlayerByUuid(OCClient.MCClient.player.getUuid()), PlanetManager.planets.get(World.NETHER).getServerWorld());
             }
         });
 
@@ -50,7 +50,7 @@ public class OCMain implements ModInitializer {
             for (RegistryKey<World> registryKey : server.getWorldRegistryKeys()) {
 				LOGGER.info(registryKey + "");
 				if(registryKey.getValue().getPath().equals("overworld") || registryKey.getValue().getNamespace().equals("oxygencraft") || registryKey.getValue().getPath().equals("the_nether"))
-                	PlanetManager.planets.put(registryKey.getValue(), registryKey);
+                	PlanetManager.planets.put(registryKey, new Planet(server.getWorld(registryKey), registryKey.getValue().getPath().equals("overworld") ? true : false));
             }
 		});
 
