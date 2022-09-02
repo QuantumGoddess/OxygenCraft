@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.registry.RegistryKey;
@@ -37,5 +38,7 @@ public class PlanetManager {
         // }
     }
 
-    
+    public static void createPlanet(MinecraftServer server, RegistryKey<World> worldKey){
+        ((IMinecraftServer) server).createWorld();
+    }
 }
